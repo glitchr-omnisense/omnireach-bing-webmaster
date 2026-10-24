@@ -1,0 +1,53 @@
+{
+    "name": "omnireach/bing-webmaster",
+    "type": "library",
+    "description": "Omnireach's Bing Webmaster Tools, under any PHP host: a site's search queries and pages in Bing with their clicks, impressions, CTR and average position, week by week or over a period, through the Bing Webmaster API (JSON, API key).",
+    "keywords": [
+        "bing",
+        "bing-webmaster",
+        "seo",
+        "search",
+        "queries",
+        "positions",
+        "framework-agnostic",
+        "omnireach"
+    ],
+    "homepage": "https://github.com/glitchr-studio/omnireach-bing-webmaster",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "omniscient/omnireach": "^1.0@dev",
+        "symfony/http-client-contracts": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "symfony/http-client": "^6.4|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnireach\\BingWebmaster\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnireach\\BingWebmaster\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
