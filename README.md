@@ -1,6 +1,6 @@
 # omnireach/bing-webmaster
 
-[omniscient/omnireach](https://github.com/glitchr-studio/omnireach)'s Bing Webmaster Tools, under
+[omnisense/omnireach](https://github.com/glitchr-omnisense/omnireach)'s Bing Webmaster Tools, under
 any PHP host: a site's search queries and pages in Bing with their clicks, impressions, CTR and
 average position, period by period or summed over the query's days.
 
