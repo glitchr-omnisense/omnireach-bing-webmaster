@@ -78,6 +78,23 @@ final class BingWebmasterProviderTest extends TestCase
      * @param list<Dimension> $dimensions
      * @param list<Metric>    $metrics
      */
+    /** The key travels in the query (Bing's API reference): an unreachable Bing names the method's path, never the key. */
+    public function testTheKeyStaysOutOfAnUnreachableMessage(): void
+    {
+        $http = new \Symfony\Component\HttpClient\MockHttpClient(static function (string $method, string $url): never {
+            throw new \Symfony\Component\HttpClient\Exception\TransportException(\sprintf('Could not resolve host: ssl.bing.com for "%s".', $url));
+        });
+
+        try {
+            (new BingWebmasterProvider($http, 'example-key-not-real', 'https://atelier.example.org/'))->searchPerformance(self::period([Dimension::Query]));
+            self::fail('no exception');
+        } catch (\Omnireach\Exception\UnreachableException $e) {
+            self::assertStringNotContainsString('example-key-not-real', $e->getMessage());
+            self::assertStringNotContainsString('apikey', $e->getMessage());
+            self::assertStringContainsString('GET /webmaster/api.svc/json/GetQueryStats', $e->getMessage());
+        }
+    }
+
     private static function period(array $dimensions, array $metrics = []): ReachQuery
     {
         return new ReachQuery(new \DateTimeImmutable('2026-09-21'), new \DateTimeImmutable('2026-10-11'), $dimensions, $metrics);

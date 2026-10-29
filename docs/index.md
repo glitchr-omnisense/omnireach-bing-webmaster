@@ -155,18 +155,17 @@ status of 400 or more or a body that is not JSON a `ProviderException`, a networ
 provider is built; a country, device, source or an analytics metric is a `NotSupportedException`
 before any call.
 
-> [!WARNING]
-> Known defect: an `UnreachableException`'s message names the URL called with its query string,
-> the API key included (`Could not resolve host: bing.invalid for
-> "https://bing.invalid/json/GetQueryStats?siteUrl=https://example.org/&apikey=SECRET-KEY".`, seen
-> in the harness on 2026-10-26), where the key, marked `#[\SensitiveParameter]`, is expected to
-> stay out of messages. Keep these messages out of pages and out of shared logs.
+The key travels in the query string, as Bing's API takes it; an `UnreachableException`'s message
+names the method and the path only, with the HTTP client's reason without the URL (`Bing Webmaster
+could not be reached for GetQueryStats (GET /json/GetQueryStats): Could not resolve host:
+bing.invalid.`). The exception's previous, the HTTP client's, still quotes the URL: keep a log that
+writes the whole chain private.
 
 ## Verified, and not
 
 Tested offline (`Tests/BingWebmasterProviderTest.php`, in the core's harness, PHP 8.4): queries
 summed over a period, week by week, the whole site, a filter, what Bing cannot answer, an error
-message, the factory through a `Registry` - against the JSON sample of `GetQueryStats` in Bing's
+message, the key kept out of an unreachable Bing's message, the factory through a `Registry` - against the JSON sample of `GetQueryStats` in Bing's
 reference and rows composed in its shape. `Tests/BareTest.php` loads every class with the
 package's requirements alone.
 
